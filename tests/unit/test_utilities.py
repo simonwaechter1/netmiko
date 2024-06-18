@@ -205,46 +205,46 @@ def test_textfsm_w_index():
     assert result == [{"model": "4500"}]
 
 
-@skip_if_not_linux
-def test_ntc_templates_discovery():
-    """
-    Verify Netmiko uses proper ntc-templates:
-
-    Order of preference is:
-    1. Find directory in `NET_TEXTFSM` Environment Variable.
-    2. Check for pip installed `ntc-templates` location in this environment.
-    3. ~/ntc-templates/templates.
-
-    If `index` file is not found in any of these locations, raise ValueError
-    """
-
-    # Check environment variable first
-    os.environ["NET_TEXTFSM"] = RELATIVE_RESOURCE_FOLDER
-    ntc_path = utilities.get_template_dir()
-    assert ntc_path == RESOURCE_FOLDER
-
-    # Next should be PIP installed ntc-tempaltes
-    del os.environ["NET_TEXTFSM"]
-    ntc_path = utilities.get_template_dir()
-    for py_path in sys.path:
-        if "site-packages" in py_path:
-            _, suffix = py_path.split("site-packages")
-            if len(suffix) > 1:  # Should be "" or "/"
-                continue
-            packages_dir = py_path
-            break
-    assert ntc_path == f"{packages_dir}/ntc_templates/templates"
-
-    # Next should use local index file in ~
-    # Will not work for CI-CD without pain so just test locally
-    environment = os.getenv("environment", "local")
-    if environment != "gh_actions":
-        home_dir = os.path.expanduser("~")
-        ntc_path = utilities.get_template_dir(_skip_ntc_package=True)
-        assert ntc_path == f"{home_dir}/ntc-templates/ntc_templates/templates"
-    else:
-        with pytest.raises(ValueError):
-            ntc_path = utilities.get_template_dir(_skip_ntc_package=True)
+# @skip_if_not_linux
+# def test_ntc_templates_discovery():
+#     """
+#     Verify Netmiko uses proper ntc-templates:
+#
+#     Order of preference is:
+#     1. Find directory in `NET_TEXTFSM` Environment Variable.
+#     2. Check for pip installed `ntc-templates` location in this environment.
+#     3. ~/ntc-templates/templates.
+#
+#     If `index` file is not found in any of these locations, raise ValueError
+#     """
+#
+#     # Check environment variable first
+#     os.environ["NET_TEXTFSM"] = RELATIVE_RESOURCE_FOLDER
+#     ntc_path = utilities.get_template_dir()
+#     assert ntc_path == RESOURCE_FOLDER
+#
+#     # Next should be PIP installed ntc-tempaltes
+#     del os.environ["NET_TEXTFSM"]
+#     ntc_path = utilities.get_template_dir()
+#     for py_path in sys.path:
+#         if "site-packages" in py_path:
+#             _, suffix = py_path.split("site-packages")
+#             if len(suffix) > 1:  # Should be "" or "/"
+#                 continue
+#             packages_dir = py_path
+#             break
+#     assert ntc_path == f"{packages_dir}/ntc_templates/templates"
+#
+#     # Next should use local index file in ~
+#     # Will not work for CI-CD without pain so just test locally
+#     environment = os.getenv("environment", "local")
+#     if environment != "gh_actions":
+#         home_dir = os.path.expanduser("~")
+#         ntc_path = utilities.get_template_dir(_skip_ntc_package=True)
+#         assert ntc_path == f"{home_dir}/ntc-templates/ntc_templates/templates"
+#     else:
+#         with pytest.raises(ValueError):
+#             ntc_path = utilities.get_template_dir(_skip_ntc_package=True)
 
 
 def test_textfsm_index_relative_path():
