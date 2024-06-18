@@ -110,6 +110,7 @@ from netmiko.oneaccess import OneaccessOneOSTelnet, OneaccessOneOSSSH
 from netmiko.ovs import OvsLinuxSSH
 from netmiko.paloalto import PaloAltoPanosSSH
 from netmiko.paloalto import PaloAltoPanosTelnet
+from netmiko.phoenix.phoenix_fl import PhoenixFlSSH, PhoenixFlTelnet
 from netmiko.pluribus import PluribusSSH
 from netmiko.quanta import QuantaMeshSSH
 from netmiko.rad import RadETXSSH
@@ -258,6 +259,7 @@ CLASS_MAPPER_BASE = {
     "oneaccess_oneos": OneaccessOneOSSSH,
     "ovs_linux": OvsLinuxSSH,
     "paloalto_panos": PaloAltoPanosSSH,
+    "phoenix_fl": PhoenixFlSSH,
     "pluribus": PluribusSSH,
     "quanta_mesh": QuantaMeshSSH,
     "rad_etx": RadETXSSH,
@@ -349,6 +351,7 @@ CLASS_MAPPER["juniper_junos_telnet"] = JuniperTelnet
 CLASS_MAPPER["nokia_sros_telnet"] = NokiaSrosTelnet
 CLASS_MAPPER["oneaccess_oneos_telnet"] = OneaccessOneOSTelnet
 CLASS_MAPPER["paloalto_panos_telnet"] = PaloAltoPanosTelnet
+CLASS_MAPPER["phoenix_fl_telnet"] = PhoenixFlTelnet
 CLASS_MAPPER["rad_etx_telnet"] = RadETXTelnet
 CLASS_MAPPER["raisecom_telnet"] = RaisecomRoapTelnet
 CLASS_MAPPER["ruckus_fastiron_telnet"] = RuckusFastironTelnet
